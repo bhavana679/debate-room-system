@@ -29,9 +29,9 @@ flowchart TD
     User --> UC3
 
     %% Inheritance (Logical representation)
-    Moderator --|> User
-    Speaker --|> User
-    Audience --|> User
+    Moderator --> User
+    Speaker --> User
+    Audience --> User
 
     %% Moderator Actions
     Moderator --> UC4
