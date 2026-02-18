@@ -1,47 +1,50 @@
 # Use Case Diagram
 
 ```mermaid
-useCaseDiagram
-    actor "User" as U
-    actor "Moderator" as M
-    actor "Speaker" as S
-    actor "Audience" as A
-    actor "System Admin" as Admin
+flowchart TD
+    %% Actors
+    User((User))
+    Moderator((Moderator))
+    Speaker((Speaker))
+    Audience((Audience))
+    Admin((System Admin))
 
-    package "Debate Room Architecture" {
-        usecase "Register / Login" as UC1
-        usecase "View Leaderboard" as UC2
-        usecase "Join Room" as UC3
-        usecase "Create Debate Room" as UC4
-        usecase "Assign Roles" as UC5
-        usecase "Start / Stop Debate" as UC6
-        usecase "Manage Round Timers" as UC7
-        usecase "Submit Argument / Speech" as UC8
-        usecase "Cast Vote" as UC9
-        usecase "View Debate Results" as UC10
-        usecase "System Maintenance" as UC11
-    }
+    subgraph "Debate Room Architecture"
+        UC1([Register / Login])
+        UC2([View Leaderboard])
+        UC3([Join Room])
+        UC4([Create Debate Room])
+        UC5([Assign Roles])
+        UC6([Start / Stop Debate])
+        UC7([Manage Round Timers])
+        UC8([Submit Argument / Speech])
+        UC9([Cast Vote])
+        UC10([View Debate Results])
+        UC11([System Maintenance])
+    end
 
     %% User Base Actions
-    U --> UC1
-    U --> UC2
-    U --> UC3
+    User --> UC1
+    User --> UC2
+    User --> UC3
 
-    %% Moderator Inheritance & Actions
-    M --|> U
-    M --> UC4
-    M --> UC5
-    M --> UC6
-    M --> UC7
+    %% Inheritance (Logical representation)
+    Moderator --|> User
+    Speaker --|> User
+    Audience --|> User
 
-    %% Speaker Inheritance & Actions
-    S --|> U
-    S --> UC8
+    %% Moderator Actions
+    Moderator --> UC4
+    Moderator --> UC5
+    Moderator --> UC6
+    Moderator --> UC7
 
-    %% Audience Inheritance & Actions
-    A --|> U
-    A --> UC9
-    A --> UC10
+    %% Speaker Actions
+    Speaker --> UC8
+
+    %% Audience Actions
+    Audience --> UC9
+    Audience --> UC10
 
     %% Admin Actions
     Admin --> UC11
