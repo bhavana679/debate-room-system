@@ -24,14 +24,12 @@ export const useArenaSocket = (roomId: string) => {
     socketService.connect(token);
     socketService.emit('join_room', roomId);
 
-    // 1. Handlers
     const handleStateChange = (payload: { sequenceNumber: number; roomStatus: string }) => {
       // Respect sequence numbers to prevent jitter from out-of-order delivery
       if (payload.sequenceNumber <= lastSequenceNumber.current) return;
       lastSequenceNumber.current = payload.sequenceNumber;
 
       queryClient.invalidateQueries({ queryKey: ['room', roomId] });
-      console.log('[Socket] State Changed:', payload.roomStatus);
     };
 
     const handleTimerTick = (payload: { remainingTime: number }) => {
@@ -46,7 +44,6 @@ export const useArenaSocket = (roomId: string) => {
 
       queryClient.invalidateQueries({ queryKey: ['room', roomId] });
       queryClient.invalidateQueries({ queryKey: ['arguments', roomId] });
-      console.log('[Socket] New Argument');
     };
 
     const handleVoteUpdated = () => {
@@ -54,7 +51,6 @@ export const useArenaSocket = (roomId: string) => {
       queryClient.invalidateQueries({ queryKey: ['room', roomId] });
     };
 
-    // 2. Subscriptions
     const unsubs = [
       socketService.subscribe(ArenaEvents.STATE_CHANGED, handleStateChange),
       socketService.subscribe(ArenaEvents.TIMER_TICK, handleTimerTick),
@@ -62,11 +58,9 @@ export const useArenaSocket = (roomId: string) => {
       socketService.subscribe(ArenaEvents.VOTE_UPDATED, handleVoteUpdated),
       socketService.subscribe(ArenaEvents.RESULT_DECLARED, () => {
          queryClient.invalidateQueries({ queryKey: ['room', roomId] });
-         console.log('[Socket] Results Finalized');
       }),
     ];
 
-    // 3. Cleanup
     return () => {
       socketService.emit('leave_room', roomId);
       unsubs.forEach(unsub => unsub());

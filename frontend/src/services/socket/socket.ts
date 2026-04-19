@@ -23,17 +23,14 @@ class SocketService {
     useAppStore.getState().setSocketStatus('CONNECTING');
 
     this.socket.on('connect', () => {
-      console.log('[SocketService] Connected');
       useAppStore.getState().setSocketStatus('CONNECTED');
     });
 
     this.socket.on('connect_error', (error) => {
-      console.error('[SocketService] Connection error:', error.message);
       useAppStore.getState().setSocketStatus('ERROR', error.message);
     });
 
     this.socket.on('disconnect', (reason) => {
-      console.warn('[SocketService] Disconnected:', reason);
       useAppStore.getState().setSocketStatus('DISCONNECTED');
     });
   }
@@ -45,7 +42,6 @@ class SocketService {
     if (this.socket) {
       this.socket.disconnect();
       this.socket = null;
-      console.log('[SocketService] Manual Disconnect');
     }
   }
 
@@ -55,7 +51,6 @@ class SocketService {
    */
   subscribe<T = unknown>(event: string, handler: (data: T) => void): () => void {
     if (!this.socket) {
-      console.warn(`[SocketService] Attempted to subscribe to "${event}" before connecting.`);
       return () => {};
     }
 
@@ -72,7 +67,6 @@ class SocketService {
    */
   emit(event: string, data?: unknown): void {
     if (!this.socket?.connected) {
-      console.error(`[SocketService] Cannot emit "${event}" - socket not connected.`);
       return;
     }
     this.socket.emit(event, data);
