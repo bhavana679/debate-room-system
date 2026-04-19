@@ -52,6 +52,8 @@ model Room {
   votingEndTime   DateTime?
   eventSequence   Int        @default(0)
   history         Json       @default("[]")
+  winnerSide      DebateSide?
+  winningPercentage Float?
   createdBy       String
   createdAt       DateTime   @default(now())
   updatedAt       DateTime   @updatedAt
@@ -83,6 +85,7 @@ model Argument {
   timestamp      DateTime   @default(now())
   sequenceNumber Int
   phase          RoomStatus
+  side           DebateSide @default(NEUTRAL)
 
   room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
