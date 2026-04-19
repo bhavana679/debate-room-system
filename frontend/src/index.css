@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  
+  /* OVERRIDE TAILWIND SLATE WITH NEW PALETTE */
+  --color-slate-50: #f1f6f9;
+  --color-slate-100: #dce8ef;
+  --color-slate-200: #bacdd7;
+  --color-slate-300: #9eb7c5;
+  --color-slate-400: #819db0;
+  --color-slate-500: #698197;
+  --color-slate-600: #556a7d;
+  --color-slate-700: #485969;
+  --color-slate-800: #3f4d5b;
+  --color-slate-900: #2a343e;
+  --color-slate-950: #161e27;
+
+  /* OVERRIDE BLUE TO MATCH THE METALLIC THEME */
+  --color-blue-50: #e3ebf3;
+  --color-blue-100: #cfdde9;
+  --color-blue-200: #a7bcc8;
+  --color-blue-300: #819cb6;
+  --color-blue-400: #6081a2;
+  --color-blue-500: #4a6a8c; /* Slightly more saturated than slate-500 */
+  --color-blue-600: #3c5775;
+  --color-blue-700: #314760;
+  --color-blue-800: #293a4d;
+  --color-blue-900: #212f3f;
+  --color-blue-950: #141d27;
+
+  /* OVERRIDE RED TO MATCH SO CON SIDE DOESN'T CLASH */
+  --color-red-50: #f6eef0;
+  --color-red-100: #eddce0;
+  --color-red-200: #dbbbc3;
+  --color-red-300: #c28b97;
+  --color-red-400: #a96272;
+  --color-red-500: #8a4b5b; /* Soft sophisticated burgundy */
+  --color-red-600: #743a49;
+  --color-red-700: #612d3a;
+  --color-red-800: #512632;
+  --color-red-900: #46222d;
+  --color-red-950: #281118;
+
+  /* Landing Colors */
+  --color-landing-background: var(--color-slate-50);
+  --color-landing-card: var(--color-slate-100);
+  --color-landing-heading: var(--color-slate-950);
+  --color-landing-body: var(--color-slate-700);
+
+  /* App Colors */
+  --color-app-background: var(--color-slate-950);
+  --color-app-card: var(--color-slate-900);
+  --color-app-primary: var(--color-blue-500);
+  --color-app-accent: var(--color-slate-400);
+}
+
+/* Base Styles */
+@layer base {
+  :root {
+    --color-bg: var(--color-slate-50);
+    --color-card: var(--color-slate-100);
+    --color-heading: var(--color-slate-950);
+    --color-body: var(--color-slate-700);
+    --color-primary: var(--color-blue-600);
+    --color-accent: var(--color-slate-500);
+  }
+
+  .theme-app {
+    --color-bg: var(--color-slate-950);
+    --color-card: var(--color-slate-900);
+    --color-heading: var(--color-slate-50);
+    --color-body: var(--color-slate-300);
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-body);
+    @apply transition-colors duration-300 font-sans antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    color: var(--color-heading);
+    @apply font-bold tracking-tight;
+  }
+
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-400 rounded-full hover:bg-slate-500 transition-colors opacity-50;
+  }
+  .theme-app ::-webkit-scrollbar-thumb {
+    @apply bg-slate-800 hover:bg-slate-700;
+  }
+}
+
+/* Senior-Level Utilities */
+@layer components {
+  .card-premium {
+    background-color: var(--color-card);
+    @apply rounded-3xl border border-slate-200/50 p-6 shadow-sm transition-all duration-300;
+  }
+  .theme-app .card-premium {
+    @apply border-slate-800/50 shadow-xl;
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    @apply rounded-2xl px-6 py-2.5 font-bold text-white shadow-md hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-accent {
+    background-color: var(--color-accent);
+    @apply rounded-2xl px-6 py-2.5 font-bold text-white shadow-md hover:brightness-110 active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-blue-400 to-slate-400 bg-clip-text text-transparent;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
