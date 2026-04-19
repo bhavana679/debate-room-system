@@ -52,4 +52,37 @@ export class PrismaVoteRepository implements IVoteRepository {
     });
     return model ? this.map(model) : null;
   }
+
+  async getLeaderboard(limit: number): Promise<any[]> {
+    const groups = await this.prisma.vote.groupBy({
+      by: ['candidateId'],
+      _count: {
+        candidateId: true
+      },
+      orderBy: {
+        _count: {
+          candidateId: 'desc'
+        }
+      },
+      take: limit
+    });
+
+    // Enhance with user details
+    const leaderboard = await Promise.all(groups.map(async (group, i) => {
+      const user = await this.prisma.user.findUnique({
+        where: { id: group.candidateId },
+        select: { email: true }
+      });
+      return {
+        rank: i + 1,
+        userId: group.candidateId,
+        name: user?.email?.split('@')[0] || 'Unknown',
+        votes: group._count.candidateId,
+        wins: Math.floor(group._count.candidateId / 2), // Mocking some wins for now based on votes
+        avatar: user?.email?.charAt(0).toUpperCase() || '?'
+      };
+    }));
+
+    return leaderboard;
+  }
 }

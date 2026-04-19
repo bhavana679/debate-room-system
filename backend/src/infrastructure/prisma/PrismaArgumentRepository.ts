@@ -14,7 +14,8 @@ export class PrismaArgumentRepository implements IArgumentRepository {
       content: model.content,
       timestamp: model.timestamp,
       sequenceNumber: model.sequenceNumber,
-      phase: model.phase as RoomStatus
+      phase: model.phase as RoomStatus,
+      side: model.side
     });
   }
 
@@ -27,7 +28,8 @@ export class PrismaArgumentRepository implements IArgumentRepository {
         content: argument.content,
         timestamp: argument.timestamp,
         sequenceNumber: argument.sequenceNumber,
-        phase: argument.phase
+        phase: argument.phase,
+        side: argument.side as any
       }
     });
     return this.map(model);
@@ -67,7 +69,8 @@ export class PrismaArgumentRepository implements IArgumentRepository {
           content: newArgumentDomain.content,
           timestamp: newArgumentDomain.timestamp,
           sequenceNumber: newArgumentDomain.sequenceNumber,
-          phase: newArgumentDomain.phase
+          phase: newArgumentDomain.phase,
+          side: newArgumentDomain.side as any
         }
       });
       return this.map(storedModel);

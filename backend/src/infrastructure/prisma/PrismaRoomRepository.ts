@@ -17,6 +17,8 @@ export class PrismaRoomRepository implements IRoomRepository {
       votingEndTime: model.votingEndTime,
       eventSequence: model.eventSequence,
       history: model.history as any,
+      winnerSide: model.winnerSide,
+      winningPercentage: model.winningPercentage,
       createdBy: model.createdBy,
       createdAt: model.createdAt,
       updatedAt: model.updatedAt
@@ -32,6 +34,8 @@ export class PrismaRoomRepository implements IRoomRepository {
         createdBy: room.createdBy,
         eventSequence: room.eventSequence,
         history: room.history as any,
+        winnerSide: (room.winnerSide as any) || null,
+        winningPercentage: room.winningPercentage || null,
         createdAt: room.createdAt,
         updatedAt: room.updatedAt
       }
@@ -52,6 +56,8 @@ export class PrismaRoomRepository implements IRoomRepository {
         votingEndTime: room.votingEndTime || null,
         eventSequence: room.eventSequence,
         history: room.history as any,
+        winnerSide: (room.winnerSide as any) || null,
+        winningPercentage: room.winningPercentage || null,
         updatedAt: new Date()
       }
     });
@@ -90,6 +96,8 @@ export class PrismaRoomRepository implements IRoomRepository {
           votingEndTime: updatedDomainRoom.votingEndTime || null,
           eventSequence: updatedDomainRoom.eventSequence,
           history: updatedDomainRoom.history as any,
+          winnerSide: (updatedDomainRoom.winnerSide as any) || null,
+          winningPercentage: updatedDomainRoom.winningPercentage || null,
           updatedAt: new Date()
         }
       });

@@ -61,4 +61,12 @@ export class PrismaParticipantRepository implements IParticipantRepository {
     });
     return models.map(m => this.map(m));
   }
+
+  async findByUserId(userId: string): Promise<RoomParticipant[]> {
+    const models = await this.prisma.roomParticipant.findMany({
+      where: { userId },
+      orderBy: { joinedAt: 'desc' }
+    });
+    return models.map(m => this.map(m));
+  }
 }
