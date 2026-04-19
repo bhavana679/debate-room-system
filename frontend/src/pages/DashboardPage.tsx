@@ -7,6 +7,16 @@ import { cn } from '../utils/cn';
 import { EmptyState, LoadingSkeleton } from '../components/UIState';
 import { Plus, Trophy, Users, Timer, ArrowRight, LayoutDashboard, Settings, LogOut, MessageSquare, Menu, X } from 'lucide-react';
 
+interface LeaderboardPreviewUser {
+  name: string;
+  wins: number;
+}
+
+interface MyStats {
+  reputation: number;
+  rank: string | number;
+}
+
 const DashboardPage: React.FC = () => {
   const navigate = useNavigate();
   const { isSidebarOpen, toggleSidebar } = useUIStore();
@@ -18,12 +28,12 @@ const DashboardPage: React.FC = () => {
 
   const { data: leaderboard } = useQuery({
     queryKey: ['leaderboard', 'preview'],
-    queryFn: () => roomApi.getLeaderboard(3),
+    queryFn: () => roomApi.getLeaderboard(3) as Promise<LeaderboardPreviewUser[]>,
   });
 
   const { data: myStats } = useQuery({
     queryKey: ['stats', 'me'],
-    queryFn: roomApi.getMyStats,
+    queryFn: () => roomApi.getMyStats() as Promise<MyStats>,
   });
 
   const currentUser = JSON.parse(localStorage.getItem('user') || '{}');

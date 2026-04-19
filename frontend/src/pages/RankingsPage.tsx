@@ -6,13 +6,22 @@ import { useUIStore } from '../store/useUIStore';
 import { cn } from '../utils/cn';
 import { LayoutDashboard, MessageSquare, Trophy, Settings, LogOut, Menu, X, Medal, TrendingUp, Search } from 'lucide-react';
 
+interface LeaderboardUser {
+  userId: string;
+  name: string;
+  avatar: string;
+  wins: number;
+  votes: number;
+  rank: number;
+}
+
 const RankingsPage: React.FC = () => {
   const navigate = useNavigate();
   const { isSidebarOpen, toggleSidebar } = useUIStore();
 
   const { data: leaderBoardData, isLoading } = useQuery({
     queryKey: ['leaderboard'],
-    queryFn: () => roomApi.getLeaderboard(20),
+    queryFn: () => roomApi.getLeaderboard(20) as Promise<LeaderboardUser[]>,
   });
 
   const handleLogout = () => {
