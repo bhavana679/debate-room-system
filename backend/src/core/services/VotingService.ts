@@ -84,4 +84,20 @@ export class VotingService {
     const votes = await this.voteRepository.findByRoomId(roomId);
     return this.strategy.calculate(roomId, votes);
   }
+
+  async getLeaderboard(limit: number = 10): Promise<any[]> {
+    return this.voteRepository.getLeaderboard(limit);
+  }
+
+  async getUserStats(userId: string): Promise<any> {
+    // In a real system, we'd have a separate stats table, but for now we aggregate
+    const leaderboard = await this.voteRepository.getLeaderboard(1000); // Get all
+    const userRank = leaderboard.find(u => u.userId === userId);
+    
+    return {
+      reputation: userRank?.votes || 0,
+      rank: userRank?.rank || 'Unranked',
+      wins: userRank?.wins || 0
+    };
+  }
 }

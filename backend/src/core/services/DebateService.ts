@@ -200,6 +200,8 @@ export class DebateService {
       // Increment sequence for the distinct result event
       const finalRoom = await this.roomRepository.transactionalUpdate(updatedRoom.id, 'SYSTEM', async (room) => {
         room.eventSequence++;
+        room.winnerSide = result.winner;
+        room.winningPercentage = result.winningPercentage ?? null;
         return room;
       });
 
@@ -207,11 +209,11 @@ export class DebateService {
         event: SocketEvents.RESULT_DECLARED,
         data: {
           roomId: finalRoom.id,
-          winner: result.winner,
+          winner: finalRoom.winnerSide,
           stats: {
             tally: result.tally,
             totalVotes: result.totalVotes,
-            winningPercentage: result.winningPercentage
+            winningPercentage: finalRoom.winningPercentage
           },
           sequenceNumber: finalRoom.eventSequence
         }

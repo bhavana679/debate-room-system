@@ -12,7 +12,6 @@ import { DebateService } from './DebateService';
 import { ValidationService } from './ValidationService';
 import { ValidationError, NotFoundError, InvalidStateError, UnauthorizedError } from '../../utils/errors';
 
-// States where debate arguments are permitted
 const ARGUMENT_ALLOWED_STATES: RoomStatus[] = [
   RoomStatus.OPENING,
   RoomStatus.REBUTTAL,
@@ -42,7 +41,8 @@ export class ArgumentService {
     this.validator.ensureState(room.status, ARGUMENT_ALLOWED_STATES);
     await this.validator.ensureIsSpeaker(userId, roomId);
 
-    Argument.validateSubmission(userId, room.activeSpeakerId);
+    const speaker = await this.participantRepository.find(userId, roomId);
+    if (!speaker) throw new UnauthorizedError('User is not a participant');
 
     const requestId = Math.random().toString(36).substring(7);
     const savedArgument = await this.argumentRepository.atomicSave(roomId, requestId, (lastSeq) => {
@@ -53,11 +53,11 @@ export class ArgumentService {
         content: content.trim(),
         timestamp: new Date(),
         phase: room.status,
+        side: speaker.side,
         sequenceNumber: lastSeq + 1
       });
     });
 
-    // Increment room event sequence atomically
     const updatedRoom = await this.roomRepository.transactionalUpdate(roomId, 'SYSTEM', async (room) => {
       room.eventSequence++;
       return room;
@@ -68,6 +68,7 @@ export class ArgumentService {
       data: {
         roomId: savedArgument.roomId,
         speakerId: savedArgument.userId,
+        side: savedArgument.side,
         content: savedArgument.content,
         timestamp: savedArgument.timestamp.toISOString(),
         sequenceNumber: updatedRoom.eventSequence,
@@ -83,7 +84,6 @@ export class ArgumentService {
       details: { contentLength: savedArgument.content.length }
     });
 
-    // Advance to the next speaker immediately following the argument
     await this.debateService.switchNextSpeaker(roomId);
 
     return savedArgument;
