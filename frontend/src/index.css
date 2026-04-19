@@ -58,20 +58,20 @@
 /* Base Styles */
 @layer base {
   :root {
-    --color-bg: var(--color-slate-50);
-    --color-card: var(--color-slate-100);
-    --color-heading: var(--color-slate-950);
-    --color-body: var(--color-slate-700);
-    --color-primary: var(--color-blue-600);
-    --color-accent: var(--color-slate-500);
+    --color-bg: #f8fafc;
+    --color-card: #ffffff;
+    --color-heading: #0f172a;
+    --color-body: #475569;
+    --color-primary: #2563eb;
+    --color-accent: #64748b;
   }
 
   .theme-app {
-    --color-bg: var(--color-slate-950);
-    --color-card: var(--color-slate-900);
-    --color-heading: var(--color-slate-50);
-    --color-body: var(--color-slate-300);
-    color-scheme: dark;
+    --color-bg: #f8fafc;
+    --color-card: #ffffff;
+    --color-heading: #0f172a;
+    --color-body: #475569;
+    color-scheme: light;
   }
 
   body {

@@ -8,6 +8,9 @@ import DashboardPage from './pages/DashboardPage';
 import CreateRoomPage from './pages/CreateRoomPage';
 import LobbyPage from './pages/LobbyPage';
 import DebateRoomPage from './pages/DebateRoomPage';
+import RankingsPage from './pages/RankingsPage';
+import SettingsPage from './pages/SettingsPage';
+import DebatesPage from './pages/DebatesPage';
 import { NotificationSystem } from './components/NotificationSystem';
 
 const queryClient = new QueryClient({
@@ -33,6 +36,9 @@ function App() {
             <Route path="/create-room" element={<CreateRoomPage />} />
             <Route path="/room/:id" element={<LobbyPage />} />
             <Route path="/arena/:id" element={<DebateRoomPage />} />
+            <Route path="/rankings" element={<RankingsPage />} />
+            <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/debates" element={<DebatesPage />} />
           </Routes>
         </div>
       </Router>
