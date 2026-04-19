@@ -1,32 +1,34 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Shield, BookOpen, MessageSquare, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { ArrowRight, Twitter, Github, Linkedin, Globe, MessageSquare } from 'lucide-react';
+
+const HERO_ILLU = "/images/hero.png";
+const CLOUD_ILLU = "/images/cloud.png";
+const GLOBE_ILLU = "/images/globe.png";
+const STUDENT_ILLU = "/images/student.png";
 
 const LandingPage: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col min-h-screen bg-landing-background selection:bg-blue-100 font-sans">
-      {/* Header / Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
-        <div className="container mx-auto px-6 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">D</div>
-            <span className="text-xl font-bold text-landing-heading tracking-tight">DebateRoom</span>
+    <div className="min-h-screen bg-white font-sans text-slate-900 antialiased overflow-x-hidden selection:bg-blue-100">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100 h-20 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 h-full flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-xl">D</div>
+            <span className="text-xl font-bold tracking-tight text-slate-950">Arena</span>
           </div>
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#" className="text-sm font-medium text-landing-body hover:text-blue-600 transition-colors">Features</a>
-            <a href="#" className="text-sm font-medium text-landing-body hover:text-blue-600 transition-colors">Protocols</a>
-            <a href="#" className="text-sm font-medium text-landing-body hover:text-blue-600 transition-colors">Community</a>
+          
+          <div className="flex items-center gap-6">
             <button 
               onClick={() => navigate('/login')}
-              className="text-sm font-semibold text-landing-heading px-4 py-2 hover:bg-slate-50 rounded-lg transition-all"
+              className="text-sm font-semibold text-slate-600 hover:text-blue-600 transition-all rounded-lg px-4 py-2"
             >
-              Sign In
+              Log In
             </button>
             <button 
               onClick={() => navigate('/register')}
-              className="btn-primary py-2 text-sm"
+              className="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-bold text-sm shadow-lg shadow-blue-600/20 hover:brightness-110 active:scale-95 transition-all"
             >
               Join Now
             </button>
@@ -34,154 +36,159 @@ const LandingPage: React.FC = () => {
         </div>
       </nav>
 
-      {/* Hero Section */}
-      <section className="relative pt-20 pb-32 overflow-hidden">
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-sm font-medium mb-6">
-              <span className="flex-shrink-0 w-2 h-2 rounded-full bg-blue-500"></span>
-              <span>Next Generation Debate Platform</span>
-            </div>
-            <h1 className="text-5xl md:text-6xl font-extrabold mb-8 leading-[1.1] text-landing-heading">
-              Where Critical Thinking Meets <span className="text-gradient">Structured Discourse</span>
+      <section className="relative pt-40 pb-32 bg-slate-50/50">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-10">
+          <div className="space-y-4">
+            <h1 className="text-6xl md:text-8xl font-black tracking-tight leading-[1.1] text-slate-950">
+              A place <br />
+              to debate <br />
+              online
             </h1>
-            <p className="text-xl text-landing-body mb-10 max-w-2xl mx-auto leading-relaxed">
-              Experience the first digital parliament designed for formal debates. 
-              Enforce rules, manage timers, and evaluate insights - all in one secure environment.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <div className="flex items-center justify-center gap-6 text-xl md:text-2xl font-black uppercase tracking-[0.3em] text-slate-400">
+              <span>practice</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-200"></span>
+              <span>compete</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-slate-200"></span>
+              <span>improve</span>
+            </div>
+          </div>
+          
+          <p className="text-xl text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed italic">
+            Empowering individuals through structured discourse and critical reasoning in a dedicated digital environment.
+          </p>
+
+          <div className="flex flex-col items-center gap-4">
+            <p className="text-xs font-bold text-slate-400 tracking-widest uppercase italic">Try debate club today!</p>
+            <button 
+              onClick={() => navigate('/register')}
+              className="px-12 py-4 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.2em] text-sm shadow-2xl shadow-blue-600/30 hover:-translate-y-1 transition-all"
+            >
+              Create Account
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
+             <div className="space-y-8">
+                <h2 className="text-5xl font-black text-slate-950 tracking-tight leading-tight">
+                  This House <br /> believes...
+                </h2>
+                <div className="space-y-6 text-slate-500 font-medium text-lg leading-relaxed">
+                  <p className="font-bold text-slate-400 italic">British Parliamentary Discourse</p>
+                  <p>It should be easy to perform formal debates online without the noise of unstructured conferencing.</p>
+                  <p>Unlike general video conferencing applications, Arena is specifically designed to support the debate process with authoritative rule enforcement.</p>
+                  <p>We automatically manage each phase of the debate — gather, prepare, debate and evaluate — so you don't have to worry about it.</p>
+                </div>
+             </div>
+             <div className="flex justify-center p-8 bg-slate-50 rounded-[3rem]">
+                <img src={CLOUD_ILLU} className="w-full max-w-sm opacity-80" alt="Cloud Illustration" />
+             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-32 bg-slate-50/50">
+        <div className="max-w-5xl mx-auto px-6 text-center space-y-16">
+          <h2 className="text-5xl font-black text-slate-950 tracking-tight leading-tight">
+            Why <br /> debate online?
+          </h2>
+
+          <div className="grid md:grid-cols-2 gap-12 text-left">
+            <div className="flex items-center gap-8">
+              <div className="w-32 h-32 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-xl">
+                 <img src={GLOBE_ILLU} className="w-20 h-20 opacity-80" alt="Globe" />
+              </div>
+              <p className="text-slate-500 font-medium text-lg leading-relaxed">
+                 Practice debating with anyone across the globe, whether from home or on the go.
+              </p>
+            </div>
+            
+            <div className="flex items-center gap-8 md:flex-row-reverse">
+              <div className="w-32 h-32 flex-shrink-0 bg-white rounded-full flex items-center justify-center shadow-xl">
+                 <img src={HERO_ILLU} className="w-20 h-20 opacity-60" alt="Analysis" />
+              </div>
+              <p className="text-slate-500 font-medium text-lg leading-relaxed text-right">
+                We make it simple to track your performance and analyze data to identify opportunities for improvement.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="py-24 bg-white border-y border-slate-50">
+        <div className="max-w-5xl mx-auto px-6 space-y-12">
+          {[
+            { title: "Define the Motion", desc: "Create a debate session by defining the motion and inviting your partners with a shareable link. Assign the roles easily and start the preparation once everyone has joined the lobby." },
+            { title: "Prepare", desc: "We create the preparation rooms for each team and automatically assign team members. Judges can join any team room to provide help upon request." },
+            { title: "Debate", desc: "Focus on the speeches — no more juggling with video tiles. We handle everything to make sure the debate process runs smoothly." },
+            { title: "Evaluate", desc: "Receive feedback from judges and teammates. Track your progress with historical data and detailed statistics." }
+          ].map((item, i) => (
+            <div key={i} className="bg-slate-100 hover:bg-slate-200 transition-all rounded-[3rem] p-12 flex flex-col md:flex-row items-center gap-12 group">
+              <div className="flex-1 space-y-6">
+                <div className="flex items-center gap-6">
+                  <div className="w-1.5 h-10 bg-blue-600 rounded-full" />
+                  <h3 className="text-3xl font-black text-slate-950 tracking-tighter">{item.title}</h3>
+                </div>
+                <p className="text-lg text-slate-500 font-medium leading-relaxed max-w-xl">{item.desc}</p>
+              </div>
+              <div className="w-full md:w-64 h-40 bg-white/50 rounded-[2rem] shadow-inner flex items-center justify-center p-6 grayscale hover:grayscale-0 transition-all">
+                 <img src={CLOUD_ILLU} className="w-full opacity-60" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="py-32">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-12">
+          <h2 className="text-4xl font-light text-slate-950">Would you like to know more?</h2>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-16">
+            <div className="w-64">
+              <img src={STUDENT_ILLU} alt="Curiosity" className="w-full opacity-80" />
+            </div>
+            <div className="text-left space-y-10">
+              <p className="text-xl text-slate-500 font-medium italic">
+                You can read more about our product features <span className="text-blue-600 font-bold border-b-2 border-blue-600 cursor-pointer">here</span>.
+              </p>
               <button 
                 onClick={() => navigate('/register')}
-                className="btn-primary w-full sm:w-auto flex items-center justify-center gap-2"
+                className="px-10 py-5 bg-blue-600 text-white rounded-full font-black uppercase tracking-[0.2em] text-sm shadow-2xl shadow-blue-600/40 hover:scale-105 transition-all"
               >
-                Get Started for Free <ArrowRight className="w-5 h-5" />
-              </button>
-              <button className="px-8 py-3 rounded-lg font-semibold text-landing-heading border border-landing-card hover:bg-white transition-all w-full sm:w-auto">
-                Watch Demo
+                Create Account
               </button>
             </div>
           </div>
         </div>
-        
-        {/* Background Decorative Blob */}
-        <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[600px] h-[600px] bg-blue-100/30 blur-3xl rounded-full -z-0"></div>
-        <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-100/30 blur-3xl rounded-full -z-0"></div>
       </section>
 
-      {/* Explanation Section */}
-      <section className="py-24 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <h2 className="text-3xl font-bold mb-6">The Rules of Engagement, <span className="text-landing-body font-normal italic">Simplified.</span></h2>
-              <p className="text-lg text-landing-body mb-8">
-                Traditional debate suffers from noise and interruptions. Our platform uses a server-side state machine to ensure every participant knows exactly when to speak, when to listen, and how to win.
-              </p>
+      <footer className="bg-slate-900 text-white py-20 border-t border-slate-800">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-16">
+          <div className="space-y-8">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-600 rounded-xl flex items-center justify-center text-white font-black text-2xl">D</div>
+              <span className="text-2xl font-black tracking-tighter text-white">Arena</span>
+            </div>
+          </div>
+
+          {[
+            { title: 'Company', links: ['Product', 'Contact'] },
+            { title: 'Resources', links: ['Docs', 'Motion Ideas', 'History of debate'] },
+            { title: 'Privacy', links: ['Privacy Policy', 'Cookie Policy', 'Terms of Service', 'Acceptable Use Policy', 'Online Preferences', 'Data Access Request'] }
+          ].map((col) => (
+            <div key={col.title} className="space-y-8">
+              <h4 className="text-sm font-black uppercase tracking-widest text-slate-400">{col.title}</h4>
               <ul className="space-y-4">
-                {[
-                  'Server-authoritative timers for every round',
-                  'Strict PRO/CON alternation enforcement',
-                  'Moderator-led phase transitions',
-                  'Immutable voting windows'
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-landing-heading font-medium">
-                    <CheckCircle2 className="w-5 h-5 text-blue-500" />
-                    {item}
+                {col.links.map(link => (
+                  <li key={link}>
+                    <a href="#" className="text-slate-500 hover:text-white transition-colors text-sm">{link}</a>
                   </li>
                 ))}
               </ul>
             </div>
-            <div className="card-premium h-[400px] flex items-center justify-center bg-slate-50 border-2 border-dashed border-slate-200">
-              <span className="text-slate-400 font-medium italic">[ Interactive Debate UI Preview ]</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Why Debate Section */}
-      <section className="py-24 bg-landing-background">
-        <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl font-bold mb-16">Why Global Leaders <span className="text-gradient">Debate</span></h2>
-          <div className="grid sm:grid-cols-3 gap-12">
-            {[
-              { title: 'Critical Analysis', icon: BookOpen, desc: 'Break down complex issues into logical arguments.' },
-              { title: 'Persuasive Speech', icon: MessageSquare, desc: 'Master the art of convincing through structure and tone.' },
-              { title: 'Civic Duty', icon: Shield, desc: 'Engage in the democratic process with respect and logic.' },
-            ].map((item, i) => (
-              <div key={i} className="group">
-                <div className="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300 shadow-sm">
-                  <item.icon className="w-8 h-8" />
-                </div>
-                <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                <p className="text-landing-body leading-relaxed">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Feature Cards Section */}
-      <section className="py-24 bg-white border-y border-slate-100">
-        <div className="container mx-auto px-6">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <h2 className="text-3xl font-bold mb-4">A Four-Step <span className="text-gradient">Discourse.</span></h2>
-            <p className="text-landing-body italic">Our platform automates the formal debate workflow so you can focus on your words.</p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { id: '01', title: 'Define', desc: 'Moderators set the topic and invite speakers to their corners.' },
-              { id: '02', title: 'Prepare', desc: 'Speakers gather evidence before the server unlocks the round.' },
-              { id: '03', title: 'Debate', desc: 'Timed opening statements and rebuttals in a strict, fair sequence.' },
-              { id: '04', title: 'Evaluate', desc: 'The audience casts votes as the results are calculated in real-time.' },
-            ].map((feature, i) => (
-              <div key={i} className="card-premium hover:border-blue-200 hover:-translate-y-1 group">
-                <span className="text-4xl font-black text-slate-100 group-hover:text-blue-50 transition-colors mb-4 block leading-none">{feature.id}</span>
-                <h3 className="text-xl font-bold mb-3 group-hover:text-blue-600 transition-colors">{feature.title}</h3>
-                <p className="text-landing-body text-sm leading-relaxed">{feature.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="py-24">
-        <div className="container mx-auto px-6">
-          <div className="bg-slate-900 rounded-[32px] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl">
-            <div className="relative z-10 max-w-2xl mx-auto">
-              <h2 className="text-4xl md:text-5xl font-bold text-white mb-8">Ready to Win Your First <span className="text-blue-400">Argument?</span></h2>
-              <p className="text-slate-400 text-lg mb-10">Join 3,000+ debaters and moderators sharpening their minds today.</p>
-              <button 
-                onClick={() => navigate('/register')}
-                className="btn-accent px-12 py-4 text-lg"
-              >
-                Sign Up & Create a Room
-              </button>
-            </div>
-            {/* Background Blob for CTA */}
-            <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 blur-[100px] rounded-full"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 blur-[100px] rounded-full"></div>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="py-12 bg-landing-background border-t border-slate-200 mt-auto">
-        <div className="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-8">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold text-xl">D</div>
-            <span className="text-xl font-bold text-landing-heading tracking-tight">DebateRoom</span>
-          </div>
-          <div className="flex flex-wrap justify-center gap-8 text-sm font-medium text-landing-body hover:text-landing-heading lowercase transition-colors">
-            <a href="#">About</a>
-            <a href="#">Protocols</a>
-            <a href="#">Community</a>
-            <a href="#">Support</a>
-            <a href="#">Legal</a>
-          </div>
-          <div className="text-landing-body text-sm">
-            (c) {new Date().getFullYear()} No Noise, Just Discourse.
-          </div>
+          ))}
         </div>
       </footer>
     </div>
