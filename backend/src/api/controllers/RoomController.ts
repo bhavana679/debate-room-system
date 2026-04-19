@@ -73,11 +73,14 @@ export class RoomController {
         return next(new ValidationError('Room ID is required'));
       }
 
+      const sideValue = side || 'NEUTRAL';
+      const roleValue = sideValue !== 'NEUTRAL' ? 'SPEAKER' : user.role;
+
       const participant = await this.roomService.joinRoom({
         userId: user.userId,
         roomId: roomId as string,
-        side: side || 'NEUTRAL',
-        role: user.role
+        side: sideValue as any,
+        role: roleValue as any
       });
 
       res.status(200).json({ success: true, data: participant });
@@ -109,6 +112,30 @@ export class RoomController {
       });
 
       res.status(200).json({ success: true, data: participant });
+    } catch (err: any) {
+      next(err);
+    }
+  };
+
+  getLeaderboard = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const limit = parseInt(req.query.limit as string) || 10;
+      const leaderboard = await this.roomService.getLeaderboard(limit);
+      res.status(200).json({ success: true, data: leaderboard });
+    } catch (err: any) {
+      next(err);
+    }
+  };
+
+  getMyStats = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) {
+        return next(new UnauthorizedError('Unauthorized'));
+      }
+
+      const stats = await this.roomService.getUserStats(userId);
+      res.status(200).json({ success: true, data: stats });
     } catch (err: any) {
       next(err);
     }

@@ -27,4 +27,16 @@ router.post('/:id/vote', authenticate, debateActionRateLimit, voteController.cas
  */
 router.get('/:id/result', authenticate, voteController.result);
 
+/**
+ * @route   GET /api/rooms/stats/me
+ * @desc    Get current user stats
+ */
+router.get('/stats/me', authenticate, voteController.stats);
+
+/**
+ * @route   GET /api/rooms/leaderboard
+ * @desc    Get global leaderboard
+ */
+router.get('/leaderboard', authenticate, voteController.leaderboard);
+
 export default router;

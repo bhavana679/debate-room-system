@@ -42,4 +42,26 @@ export class VoteController {
       next(err);
     }
   };
+
+  leaderboard = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const { limit } = req.query;
+      const data = await this.votingService.getLeaderboard(Number(limit) || 10);
+      res.status(200).json({ success: true, data });
+    } catch (err: any) {
+      next(err);
+    }
+  };
+
+  stats = async (req: AuthRequest, res: Response, next: NextFunction): Promise<void> => {
+    try {
+      const userId = req.user?.userId;
+      if (!userId) throw new UnauthorizedError('Unauthorized');
+      
+      const data = await this.votingService.getUserStats(userId);
+      res.status(200).json({ success: true, data });
+    } catch (err: any) {
+      next(err);
+    }
+  };
 }

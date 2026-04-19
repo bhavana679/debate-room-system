@@ -37,6 +37,20 @@ router.post('/', authenticate, debateActionRateLimit, roomController.create);
 router.get('/', authenticate, roomController.list);
 
 /**
+ * @route   GET /api/rooms/leaderboard
+ * @desc    Get top debaters
+ * @access  Private
+ */
+router.get('/leaderboard', authenticate, roomController.getLeaderboard);
+
+/**
+ * @route   GET /api/rooms/stats/me
+ * @desc    Get current user stats
+ * @access  Private
+ */
+router.get('/stats/me', authenticate, roomController.getMyStats);
+
+/**
  * @route   GET /api/rooms/:id
  * @desc    Get a single debate room by ID
  * @access  Private
