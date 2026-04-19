@@ -29,6 +29,8 @@ export class Room {
   votingEndTime?: Date | null;
   eventSequence: number = 0;
   history: StateTransition[] = [];
+  winnerSide?: string | null;
+  winningPercentage?: number | null;
   createdBy!: string;
   createdAt!: Date;
   updatedAt!: Date;

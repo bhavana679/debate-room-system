@@ -9,6 +9,7 @@ export class Argument {
   timestamp!: Date;
   sequenceNumber!: number;
   phase!: RoomStatus;
+  side!: string;
 
   constructor(data: Partial<Argument>) {
     Object.assign(this, data);
