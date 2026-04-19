@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  MODERATOR
+  SPEAKER
+  AUDIENCE
+}
+
+enum RoomStatus {
+  WAITING
+  OPENING
+  REBUTTAL
+  CLOSING
+  VOTING
+  ENDED
+}
+
+enum DebateSide {
+  PRO
+  CON
+  NEUTRAL
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(AUDIENCE)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  participants RoomParticipant[]
+  arguments    Argument[]
+  votes        Vote[]
+  createdRooms Room[] @relation("RoomCreator")
+}
+
+model Room {
+  id              String     @id @default(uuid())
+  topic           String
+  status          RoomStatus @default(WAITING)
+  activeSpeakerId String?
+  stateStartTime  DateTime?
+  phaseDuration   Int?
+  votingStartTime DateTime?
+  votingEndTime   DateTime?
+  eventSequence   Int        @default(0)
+  history         Json       @default("[]")
+  createdBy       String
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+
+  creator      User              @relation("RoomCreator", fields: [createdBy], references: [id])
+  participants RoomParticipant[]
+  arguments    Argument[]
+  votes        Vote[]
+}
+
+model RoomParticipant {
+  roomId   String
+  userId   String
+  role     UserRole
+  side     DebateSide
+  joinedAt DateTime @default(now())
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([roomId, userId])
+}
+
+model Argument {
+  id             String     @id @default(uuid())
+  roomId         String
+  userId         String
+  content        String
+  timestamp      DateTime   @default(now())
+  sequenceNumber Int
+  phase          RoomStatus
+
+  room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Vote {
+  id          String   @id @default(uuid())
+  roomId      String
+  voterId     String
+  candidateId String
+  timestamp   DateTime @default(now())
+
+  room  Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  voter User @relation(fields: [voterId], references: [id], onDelete: Cascade)
+  
+  @@unique([roomId, voterId])
+}
