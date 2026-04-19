@@ -5,4 +5,5 @@ export interface IParticipantRepository {
   update(participant: RoomParticipant): Promise<RoomParticipant>;
   find(userId: string, roomId: string): Promise<RoomParticipant | null>;
   findByRoomId(roomId: string): Promise<RoomParticipant[]>;
+  findByUserId?(userId: string): Promise<RoomParticipant[]>;
 }
