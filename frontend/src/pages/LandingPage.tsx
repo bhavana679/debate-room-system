@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowRight, Twitter, Github, Linkedin, Globe, MessageSquare } from 'lucide-react';
+
 
 const HERO_ILLU = "/images/hero.png";
 const CLOUD_ILLU = "/images/cloud.png";

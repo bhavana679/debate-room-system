@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUIStore } from '../store/useUIStore';
 import { useAppStore } from '../store/useAppStore';
 import { cn } from '../utils/cn';
-import { LayoutDashboard, MessageSquare, Trophy, Settings, LogOut, Menu, X, User, Bell, Shield, Palette, Save, Camera, Check, Loader2 } from 'lucide-react';
+import { LayoutDashboard, MessageSquare, Trophy, Settings, LogOut, Menu, X, User, Bell, Shield, Palette, Save, Camera, Loader2 } from 'lucide-react';
 
 const SettingsPage: React.FC = () => {
   const navigate = useNavigate();
