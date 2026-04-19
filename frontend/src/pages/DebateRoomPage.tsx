@@ -260,7 +260,7 @@ const DebateRoomPage: React.FC = () => {
                             {arg.phase || arg.type || 'Statement'} Protocol
                           </p>
                           <p className="text-[10px] font-bold text-slate-300 uppercase tracking-tight">
-                            {new Date(arg.submittedAt || arg.createdAt || Date.now()).toLocaleTimeString()}
+                            {arg.submittedAt || arg.createdAt ? new Date(arg.submittedAt || arg.createdAt).toLocaleTimeString() : 'Just now'}
                           </p>
                         </div>
                       </div>

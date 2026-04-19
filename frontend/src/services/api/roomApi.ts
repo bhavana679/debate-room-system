@@ -37,12 +37,12 @@ export const roomApi = {
     return response.data.data;
   },
 
-  getLeaderboard: async (limit: number = 10): Promise<any[]> => {
+  getLeaderboard: async (limit: number = 10): Promise<unknown[]> => {
     const response = await apiClient.get(`/rooms/leaderboard?limit=${limit}`);
     return response.data.data;
   },
 
-  getMyStats: async (): Promise<any> => {
+  getMyStats: async (): Promise<unknown> => {
     const response = await apiClient.get('/rooms/stats/me');
     return response.data.data;
   }

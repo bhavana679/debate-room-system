@@ -30,7 +30,7 @@ class SocketService {
       useAppStore.getState().setSocketStatus('ERROR', error.message);
     });
 
-    this.socket.on('disconnect', (_reason) => {
+    this.socket.on('disconnect', () => {
       useAppStore.getState().setSocketStatus('DISCONNECTED');
     });
   }
