@@ -1,5 +1,5 @@
 import { apiClient } from './client';
-import type { Room } from '../../types/room';
+import type { Room, Argument } from '../../types/room';
 
 export const debateApi = {
   // Backend: POST /api/debate/:id/start
@@ -20,14 +20,14 @@ export const debateApi = {
     return response.data.data;
   },
 
-  // Backend: POST /api/rooms/:id/argument  (mounted under rooms router!)
-  submitArgument: async (roomId: string, content: string): Promise<unknown> => {
+  // Backend: POST /api/rooms/:id/argument
+  submitArgument: async (roomId: string, content: string): Promise<Argument> => {
     const response = await apiClient.post(`/rooms/${roomId}/argument`, { content });
     return response.data.data;
   },
 
   // Backend: GET /api/rooms/:id/arguments
-  getArguments: async (roomId: string): Promise<unknown[]> => {
+  getArguments: async (roomId: string): Promise<Argument[]> => {
     const response = await apiClient.get(`/rooms/${roomId}/arguments`);
     return response.data.data;
   }

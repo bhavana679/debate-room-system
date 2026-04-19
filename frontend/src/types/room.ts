@@ -20,6 +20,8 @@ export interface Room {
   winnerSide: string | null;
   winningPercentage: number | null;
   eventSequence: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface Participant {
@@ -28,4 +30,15 @@ export interface Participant {
   role: string;
   side: string;
   joinedAt: Date;
+}
+
+export interface Argument {
+  id: string;
+  roomId: string;
+  userId: string;
+  content: string;
+  timestamp: string;
+  sequenceNumber: number;
+  phase: RoomStatus;
+  side: string;
 }
