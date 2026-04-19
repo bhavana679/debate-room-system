@@ -10,6 +10,9 @@ import { ValidationError, NotFoundError, UnauthorizedError, ConflictError } from
 export interface CreateRoomDTO {
   topic: string;
   userId: string;
+  openingDuration?: number;
+  rebuttalDuration?: number;
+  closingDuration?: number;
 }
 
 export interface JoinRoomDTO {
@@ -38,6 +41,7 @@ export class RoomService {
       id: Math.random().toString(36).substring(7),
       topic: data.topic,
       status: RoomStatus.WAITING,
+      phaseDuration: data.openingDuration || 180, // Store default if not provided
       createdBy: data.userId,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -70,6 +74,56 @@ export class RoomService {
 
   async getParticipants(roomId: string): Promise<RoomParticipant[]> {
     return await this.participantRepository.findByRoomId(roomId);
+  }
+
+  async getLeaderboard(limit: number): Promise<any[]> {
+    const rooms = await this.roomRepository.findAll();
+    const endedRooms = rooms.filter(r => r.status === RoomStatus.ENDED && r.winnerSide);
+
+    const stats: Record<string, { name: string, wins: number, votes: number, avatar: string }> = {};
+
+    for (const room of endedRooms) {
+      const participants = await this.participantRepository.findByRoomId(room.id);
+      const winners = participants.filter(p => p.side === room.winnerSide && p.role === UserRole.SPEAKER);
+
+      for (const winner of winners) {
+        if (!stats[winner.userId]) {
+          stats[winner.userId] = {
+            name: winner.userId.split('-')[0] ?? winner.userId,
+            wins: 0,
+            votes: 0,
+            avatar: winner.userId.charAt(0).toUpperCase()
+          };
+        }
+        stats[winner.userId]!.wins++;
+      }
+    }
+
+    return Object.values(stats)
+      .sort((a, b) => b.wins - a.wins || b.votes - a.votes)
+      .slice(0, limit)
+      .map((user, i) => ({ ...user, rank: i + 1, userId: Object.keys(stats).find(k => stats[k] === user) }));
+  }
+
+  async getUserStats(userId: string): Promise<any> {
+    const userRooms = await this.participantRepository.findByUserId!(userId);
+    
+    let wins = 0;
+    let totalRooms = userRooms.length;
+    
+    for (const participant of userRooms) {
+      const room = await this.roomRepository.findById(participant.roomId);
+      if (room && room.status === RoomStatus.ENDED && participant.side === room.winnerSide) {
+        wins++;
+      }
+    }
+
+    return {
+      reputation: wins * 100,
+      wins,
+      totalRooms,
+      rank: wins > 0 ? "Grandmaster" : "Initiate"
+    };
   }
 
   async joinRoom(data: JoinRoomDTO): Promise<RoomParticipant> {
