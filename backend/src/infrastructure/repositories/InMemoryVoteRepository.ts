@@ -77,4 +77,8 @@ export class InMemoryVoteRepository implements IVoteRepository {
   async findByUser(userId: string, roomId: string): Promise<Vote | null> {
     return this.votes.find(v => v.userId === userId && v.roomId === roomId) || null;
   }
+
+  async getLeaderboard(limit: number): Promise<any[]> {
+    return []; // Dummy implementation for in-memory
+  }
 }
